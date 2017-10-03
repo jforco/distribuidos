@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Auth;
 class LoginController extends Controller
 {
     /*
@@ -46,7 +46,7 @@ class LoginController extends Controller
         if ($this->attemptLogin($request)) {
             $user = $this->guard()->user();
             $user->api_token = str_random(60);
-
+            $user->save();
             return response()->json([
                 'data' => $user->toArray(),
             ]);
@@ -55,6 +55,19 @@ class LoginController extends Controller
         return response()->json([
                 'data' => "error fatal",
             ]);
+    }
+
+    public function logout(Request $request)
+    {
+        $user = Auth::guard('api')->user();
+
+        if ($user) {
+            $user->api_token = "void";
+            $user->save();
+            return response()->json(['data' => 'Desconectado'], 200);
+        }
+
+        return response()->json(['data' => 'Nadie se desconecto'], 200);
     }
 
 }
