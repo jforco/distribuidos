@@ -27,3 +27,9 @@ Route::group(['middleware' => 'auth:api'], function() {
 	Route::put('/user/update/{userid}', 'Auth\RegisterController@update');
 });
 
+
+//para el anuncio
+Route::get('/anuncio', 'AnuncioController@index');
+Route::get('/anuncio/{anuncio}', 'AnuncioController@show');
+Route::post('/anuncio', 'AnuncioController@store');
+Route::put('/anuncio/{anuncio}', 'AnuncioController@update');
