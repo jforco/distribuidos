@@ -32,7 +32,7 @@ class AumentoAUsers extends Migration
             //
             $table->dropColumn(['sexo']);
             $table->dropColumn(['telefono']);
-            $table->dropColumn(['api_token'])
+            $table->dropColumn(['api_token']);
         });
     }
 }
