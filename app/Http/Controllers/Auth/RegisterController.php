@@ -101,7 +101,16 @@ class RegisterController extends Controller
     protected function registered(Request $request, $user)
     {
         //$user->generateToken();
-
+        $user->api_token = str_random(60);
+        $user->save();
         return response()->json(['data' => $user->toArray()], 201);
+    }
+
+    public function update(Request $request, $userid)
+    {
+        $user = User::findOrFail($userid);
+        $user->update($request->all());
+
+        return response()->json($user, 200);
     }
 }
